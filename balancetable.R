@@ -118,8 +118,8 @@ extrabalancetable <- function(balanceoutput) {
   
   varnames <- c("Native English", "First-Gen Immigrant", "Sec-Gen Immigrant", "Wealth", "AP Class", "IB Program", "Risk Factors", 
                 "Parent English", "IEP", "School SES", "School Math/Reading", "School Uni Rate", "School Suspend Rate")
-  balancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, meanPBefore, meanPAfter)
-  return(balancetable)
+  extrabalancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, meanPBefore, meanPAfter)
+  return(extrabalancetable)
   
 }
 
