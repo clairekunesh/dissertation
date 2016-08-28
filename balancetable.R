@@ -116,8 +116,8 @@ extrabalancetable <- function(balanceoutput) {
   # you can include TrBefore and/or TrAfter depending on whether or not many treated observations are dropped
   # get your varnames IN ORDER from the MatchBalance function (it's not clear whether they can be extracted from the output)
   
-  varnames <- c("Native English", "First-Gen Immigrant", "Sec-Gen Immigrant", "Wealth", "AP Class", "IB Program", "Risk Factors", 
-                "Parent English", "IEP", "School SES", "School Math/Reading", "School Uni Rate", "School Suspend Rate")
+  varnames <- c("Native English Speaker", "First-Generation Immigrant", "Second-Generation Immigrant", "Wealth", "AP Class", "IB Program", "Risk Factors", 
+                "Parent Native English Speaker", "IEP", "School SES", "School Math/Reading", "School College Matriculation Rate", "School Suspension Rate")
   extrabalancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, meanPBefore, meanPAfter)
   return(extrabalancetable)
   
