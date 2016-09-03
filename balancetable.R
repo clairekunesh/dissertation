@@ -1,5 +1,8 @@
 # balance table function for main variables
 
+# the function accepts the object balanceoutput, which is the result of the MatchBalance() function 
+# in the Matching package
+
 balancetable <- function(balanceoutput) {
   
   before <- balanceoutput$BeforeMatching
@@ -21,12 +24,22 @@ balancetable <- function(balanceoutput) {
     meanCoBefore[i] <- round(before[[i]]$mean.Co, digits = 2)
   }
   
-  # create vector of pre-matching p-values
+  # create vector of pre-matching t-test p-values
   
-  meanPBefore <- rep(NA, n)
+  pBefore <- rep(NA, n)
   
   for(i in 1:n) {
-    meanPBefore[i] <- round(before[[i]]$p.value, digits = 3)
+    pBefore[i] <- round(before[[i]]$p.value, digits = 3)
+  }
+  
+  # create vector of pre-matching ks-test p-values
+  
+  ksBefore <- rep(NA, n)
+  
+  for(i in 1:n) {
+    if(!is.null(before[[i]]$ks)) {
+      ksBefore[i] <- round(before[[i]]$ks$ks.boot.pvalue, digits = 3)
+    }
   }
   
   # create vectors of post-matching means
@@ -43,24 +56,37 @@ balancetable <- function(balanceoutput) {
     meanCoAfter[i] <- round(after[[i]]$mean.Co, digits = 2)
   }
   
-  # create vector of post-matching p-values
+  # create vector of post-matching t-test p-values
   
-  meanPAfter <- rep(NA, n)
+  pAfter <- rep(NA, n)
   
   for(i in 1:n) {
-    meanPAfter[i] <- round(after[[i]]$p.value, digits = 3)
+    pAfter[i] <- round(after[[i]]$p.value, digits = 3)
+  }
+  
+  # create vector of post-matching ks-test p-values
+  
+  ksAfter <- rep(NA, n)
+  
+  for(i in 1:n) {
+    if(!is.null(before[[i]]$ks)) {
+      ksAfter[i] <- round(after[[i]]$ks$ks.boot.pvalue, digits = 3)
+    }
   }
   
   # you can include TrBefore and/or TrAfter depending on whether or not many treated observations are dropped
   # get your varnames from the MatchBalance function (it's not clear whether they can be extracted from the output)
   
   varnames <- c("American Indian", "Asian", "Black", "Latino", "Multiracial", "Male", "Math/Reading", "Retain", "SES", "Single Parent")
-  balancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, meanPBefore, meanPAfter)
+  balancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, pBefore, pAfter,
+                             ksBefore, ksAfter)
   return(balancetable)
   
 }
 
 # balance table function for extra variables
+
+# note that the KS test output for the imputed variables is not meaningful, and should be removed from the table
 
 extrabalancetable <- function(balanceoutput) {
   
@@ -85,10 +111,18 @@ extrabalancetable <- function(balanceoutput) {
   
   # create vector of pre-matching p-values
   
-  meanPBefore <- rep(NA, n)
+  pBefore <- rep(NA, n)
   
   for(i in 1:n) {
-    meanPBefore[i] <- round(before[[i]]$p.value, digits = 3)
+    pBefore[i] <- round(before[[i]]$p.value, digits = 3)
+  }
+  
+  ksBefore <- rep(NA, n)
+  
+  for(i in 1:n) {
+    if(!is.null(before[[i]]$ks)) {
+      ksBefore[i] <- round(before[[i]]$ks$ks.boot.pvalue, digits = 3)
+    }
   }
   
   # create vectors of post-matching means
@@ -107,10 +141,20 @@ extrabalancetable <- function(balanceoutput) {
   
   # create vector of post-matching p-values
   
-  meanPAfter <- rep(NA, n)
+  pAfter <- rep(NA, n)
   
   for(i in 1:n) {
-    meanPAfter[i] <- round(after[[i]]$p.value, digits = 3)
+    pAfter[i] <- round(after[[i]]$p.value, digits = 3)
+  }
+  
+  # create vector of post-matching ks-test p-values
+  
+  ksAfter <- rep(NA, n)
+  
+  for(i in 1:n) {
+    if(!is.null(before[[i]]$ks)) {
+      ksAfter[i] <- round(after[[i]]$ks$ks.boot.pvalue, digits = 3)
+    }
   }
   
   # you can include TrBefore and/or TrAfter depending on whether or not many treated observations are dropped
@@ -118,8 +162,10 @@ extrabalancetable <- function(balanceoutput) {
   
   varnames <- c("Native English Speaker", "First-Generation Immigrant", "Second-Generation Immigrant", "Wealth", "AP Class", "IB Program", "Risk Factors", 
                 "Parent Native English Speaker", "IEP", "School SES", "School Math/Reading", "School College Matriculation Rate", "School Suspension Rate")
-  extrabalancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, meanPBefore, meanPAfter)
+  extrabalancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, pBefore, pAfter,
+                                  ksBefore, ksAfter)
   return(extrabalancetable)
   
 }
+
 
