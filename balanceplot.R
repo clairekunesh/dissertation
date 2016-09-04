@@ -1,5 +1,5 @@
 # call ggplot before running the function
-library(ggplot())
+library(ggplot2)
 
 # balanceoutput is the output of the MatchBalance() function in the Matching package
 # varnames is a vector of strings; your variables names MUST be in the same order as they were in the matching function!
