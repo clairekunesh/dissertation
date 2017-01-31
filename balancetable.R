@@ -88,7 +88,7 @@ balancetable <- function(varnames, balanceoutput) {
 
 # note that the KS test output for the imputed and school-level variables is not meaningful, and should be removed from the table
 
-extrabalancetable <- function(balanceoutput) {
+extrabalancetable <- function(extravarnames, balanceoutput) {
   
   before <- balanceoutput$BeforeMatching
   after <- balanceoutput$AfterMatching
