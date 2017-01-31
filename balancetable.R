@@ -1,9 +1,10 @@
 # balance table function for main variables
 
 # the function accepts the object balanceoutput, which is the result of the MatchBalance() function 
+# varnames is like this c("American Indian", "Asian", "Black", "Latino", "Multiracial", "Male", "Math/Reading", "Retain", "SES", "Single Parent")
 # in the Matching package
 
-balancetable <- function(balanceoutput) {
+balancetable <- function(varnames, balanceoutput) {
   
   before <- balanceoutput$BeforeMatching
   after <- balanceoutput$AfterMatching
@@ -77,7 +78,6 @@ balancetable <- function(balanceoutput) {
   # you can include TrBefore and/or TrAfter depending on whether or not many treated observations are dropped
   # get your varnames from the MatchBalance function (it's not clear whether they can be extracted from the output)
   
-  varnames <- c("American Indian", "Asian", "Black", "Latino", "Multiracial", "Male", "Math/Reading", "Retain", "SES", "Single Parent")
   balancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, pBefore, pAfter,
                              ksBefore, ksAfter)
   return(balancetable)
@@ -86,7 +86,7 @@ balancetable <- function(balanceoutput) {
 
 # balance table function for extra variables
 
-# note that the KS test output for the imputed variables is not meaningful, and should be removed from the table
+# note that the KS test output for the imputed and school-level variables is not meaningful, and should be removed from the table
 
 extrabalancetable <- function(balanceoutput) {
   
@@ -158,10 +158,7 @@ extrabalancetable <- function(balanceoutput) {
   }
   
   # you can include TrBefore and/or TrAfter depending on whether or not many treated observations are dropped
-  # get your varnames IN ORDER from the MatchBalance function (it's not clear whether they can be extracted from the output)
-  
-  varnames <- c("Native English Speaker", "First-Generation Immigrant", "Second-Generation Immigrant", "Wealth", "AP Class", "IB Program", "Risk Factors", 
-                "Parent Native English Speaker", "IEP", "School SES", "School Math/Reading", "School College Matriculation Rate", "School Suspension Rate")
+
   extrabalancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, pBefore, pAfter,
                                   ksBefore, ksAfter)
   return(extrabalancetable)
