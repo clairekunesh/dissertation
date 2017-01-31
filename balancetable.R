@@ -159,7 +159,7 @@ extrabalancetable <- function(extravarnames, balanceoutput) {
   
   # you can include TrBefore and/or TrAfter depending on whether or not many treated observations are dropped
 
-  extrabalancetable <- data.frame(varnames, meanTrBefore, meanCoBefore, meanCoAfter, pBefore, pAfter,
+  extrabalancetable <- data.frame(extravarnames, meanTrBefore, meanCoBefore, meanCoAfter, pBefore, pAfter,
                                   ksBefore, ksAfter)
   return(extrabalancetable)
   
